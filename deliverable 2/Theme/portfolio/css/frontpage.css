@@ -1,0 +1,46 @@
+#frontMain {
+    background: url("../img/web-design.jpg") no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    margin: 0px!important;
+}
+
+@media (max-width: 576px) {
+    #frontMain {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.cell {
+    text-align: center;
+    flex: 1 1 auto;
+    padding-bottom: 25px;
+    align-items: center;
+    width: 180px;
+}
+
+.icons {
+    max-width: 60%;
+}
+
+.flex-container {
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.flex-item {
+    width: 180px;
+    text-align: center;
+    margin-bottom: 20px;
+}

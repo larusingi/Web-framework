@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Larus weather app</title>
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+
+    <link rel="icon" href="img/favicon.png" sizes="16x16" type="image/png">
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/sugar.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <meta name="description" content="page that uses weather api">
+</head>
+
+<body class="Site">
+
+    <!-- Begin page content -->
+    <header>
+        <p id="headertext">Larus weather page</p>
+    </header>
+    <main class="Site-content">
+        <div class="col-xs-12">
+            <p id="localWetherLabel">Weather in your location :</p>
+        </div>
+        <div class="col-xs-12">
+            <p class="weatherHeader">Weatherforecast in your location for the next 5 days :</p>
+        </div>
+
+        <div class="col-xs-12  days">
+
+            <div class="col-xs-1 custPaddEndRight ">
+
+
+            </div>
+
+
+            <div class="col-xs-12 col-sm-2 custPaddRight ">
+                <div class="forecastDay" id="day7">
+                    <img class="spinnz" src="img/spinner.gif" />
+                </div>
+
+
+            </div>
+
+            <div class="col-xs-12 col-sm-2 custPaddLeft boxBackground">
+                <div class="forecastDay" id="day15">
+                    <img class="spinnz" src="img/spinner.gif" />
+                </div>
+
+
+            </div>
+            <div class="col-xs-12 col-sm-2 custPaddLeft">
+                <div class="forecastDay" id="day23">
+                    <img class="spinnz" src="img/spinner.gif" />
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-2 custPaddLeft ">
+                <div class="forecastDay" id="day31">
+                    <img class="spinnz" src="img/spinner.gif" />
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-2 custPaddLeft">
+                <div class="forecastDay" id="day39">
+                    <img class="spinnz" src="img/spinner.gif" />
+                </div>
+            </div>
+
+            <div class="col-xs-1 custPaddEndRight">
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-xs-12 ">
+            <div class="col-xs-1  "></div>
+
+            <div class="col-xs-11 custPadd">
+
+                <p class="leftweatherHeader custPadd">Weather around the world :</p>
+            </div>
+
+        </div>
+
+
+
+        <div class="col-xs-12 cityDropdown">
+
+            <div class="col-xs-1  "></div>
+
+            <div class="col-xs-3 custPadd">
+
+                <datalist id="locationList"></datalist>
+                <input id="locationListInput" class="form-control" type="text" list="locationList" placeholder="Selec City">
+            </div>
+
+            <div class="col-xs-6 cityHeader">
+                <p id="selectedCity"> </p>
+            </div>
+
+        </div>
+    </main>
+    <footer class="footer">
+
+        <p class="footerText">Copyright (c) 2017 - larus@weatherpage.com</p>
+
+    </footer>
+
+
+</body>
+
+<script type="text/javascript">
+    function getWeather(city) {
+
+        $.getJSON('http://api.openweathermap.org/data/2.5/weather', {
+            id: city,
+            units: "metric",
+            appid: "827768fc48f74d39ed950b9720f0239d"
+        }).done(function(json) {
+            showWeather(json, "");
+        });
+
+    };
+
+    function getWeather(city, what) {
+
+        $.getJSON('http://api.openweathermap.org/data/2.5/weather', {
+            id: city,
+            units: "metric",
+            appid: "827768fc48f74d39ed950b9720f0239d"
+        }).done(function(json) {
+            showWeather(json, what);
+        });
+
+    };
+
+    function showWeather(data, whatToDo) {
+
+        if (whatToDo === "local") {
+
+            var localW = data.name + " " + Math.round(data.main.temp) + " °C  " + data.weather[0].description;
+            $('#localWetherLabel').text(localW);
+
+        } else {
+            var globalW = "The weather in " + data.name + " is : " + Math.round(data.main.temp) + " °C  " + data.weather[0].description;
+            $('#selectedCity').text(globalW);
+
+
+        }
+    };
+
+    function getDayOfWeek(date) {
+        var dayOfWeek = new Date(date).getDay();
+        return isNaN(dayOfWeek) ? null : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
+    }
+
+    function getForecast(cityID) {
+        $.getJSON('http://api.openweathermap.org/data/2.5/forecast', {
+            id: cityID,
+            units: "metric",
+            appid: "827768fc48f74d39ed950b9720f0239d"
+        }, populateCluster, 'jsonp');
+    };
+
+    function populateCluster(data) {
+
+        for (i = 0; i < 39; i++) {
+
+            var temp = Math.round(data.list[i].main.temp);
+            var descript = data.list[i].weather[0].description;
+            var iconCode = data.list[i].weather[0].icon;
+            var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+            var weekday = getDayOfWeek(data.list[i].dt_txt);
+
+            i = i + 7;
+            var currday = "#day" + i;
+
+            //$(currday).empty();
+            $(currday).append("<p class='weatherHeader'>" + weekday + "</p>");
+            $(currday).append("<div class='col-xs-12'><img  class='weatherIMG' src='" + iconUrl + "'align='middle''></div>");
+            $(currday).append("<p class='weatherText'>" + descript + "</p>");
+            $(currday).append("<p class='weatherText'>" + temp + " °C </p>");
+        }
+    };
+
+
+
+
+    $(document).ready(function() {
+
+
+        $('.spinnz').show();
+
+
+        var worker = new Worker("js/loadWeather.js");
+        var listWorker = new Worker("js/dataListWorker.js");
+
+        $.getJSON('http://ip-api.com/json', function(json) {
+            worker.postMessage(json.city);
+        });
+
+        listWorker.postMessage("");
+
+        worker.addEventListener('message', function(e) {
+            $('.spinnz').hide();
+            getWeather(e.data, "local");
+            getForecast(e.data);
+        }, false);
+
+        listWorker.addEventListener('message', function(e) {
+
+            document.getElementById('locationList').innerHTML = e.data;
+        }, false);
+
+        $("#locationListInput").on('input', function() {
+
+            var val = this.value;
+            if ($('#locationList option').filter(function() {
+                    return this.value === val;
+                }).length) {
+
+                var input = document.getElementById('locationListInput');
+                var list = document.getElementById('locationList');
+                var i;
+                for (i = 0; i < list.options.length; ++i) {
+                    if (list.options[i].value === input.value) {
+                        var cityID = list.options[i].getAttribute('data-id');
+                        getWeather(cityID, "select");
+                        return;
+                    }
+
+                }
+            }
+
+        });
+
+
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,63 @@
+.profilePic {
+    max-width: 100%;
+    margin-top 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    margin-bottom: 20px;
+}
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.AboutText{
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 5px;
+     margin-top: 5px;
+}
+
+.topRow{
+    margin-top: 30px;
+}
+.degree{
+    font-weight: 700;
+}
+.stars{
+
+    height: 30px;s
+}
+
+.padd{
+    
+}
+
+.flex-container {
+    display: flex;
+  
+  
+}
+
+.flex-item {
+     font-size: 18px;
+
+    width: 120px;
+   
+}
+.flex-itemB {
+ 
+    width: 100px;
+   
+}
+
+
+.skills{
+    margin-top: 10px;
+}
+
+.bottom{
+    margin-bottom: 10px;
+}
+

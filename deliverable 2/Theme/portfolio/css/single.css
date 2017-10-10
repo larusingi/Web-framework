@@ -1,0 +1,24 @@
+.centerText{
+    text-align: center;
+}
+
+
+.headerText{
+    margin-bottom: 20px;
+    
+    
+}
+.wrapper {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.contentBox{
+    margin-top: 30px;
+        margin-bottom: 30px;
+}
+
+.imgBorder{
+    border-style: solid;
+    border-width: 2px;
+}
